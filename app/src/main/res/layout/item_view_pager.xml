@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:text="20"
             android:textColor="@color/white"
-            android:textSize="60sp"
+            android:textSize="70sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

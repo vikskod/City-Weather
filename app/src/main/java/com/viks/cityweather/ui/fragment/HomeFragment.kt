@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import com.viks.cityweather.R
 import com.viks.cityweather.databinding.FragmentHomeBinding
 import com.viks.cityweather.ui.adapter.ViewPagerAdapter
@@ -13,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
 
-    private val list = listOf(1, 2, 3, 4, 5, 6, 7)
+    private val list = listOf(1, 2, 3)
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreateView(
@@ -27,6 +28,10 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
-        binding.viewPager.adapter = ViewPagerAdapter(list)
+        val pagerAdapter = ViewPagerAdapter(list)
+        binding.viewPager.adapter = pagerAdapter
+
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ ->
+        }.attach()
     }
 }
