@@ -20,6 +20,8 @@ data class WeatherResponse(
     val main: Main,
     @SerializedName("name")
     val name: String,
+    @SerializedName("rain")
+    val rain: Rain,
     @SerializedName("sys")
     val sys: Sys,
     @SerializedName("timezone")

@@ -9,17 +9,19 @@ import retrofit2.http.Query
 interface ApiService {
 
     // Get  weather by city name
-    @GET("/weather")
+    @GET("weather")
     suspend fun getWeatherByCity(
-        @Query("city") city: String,
-        @Query("appid") appId: String = BuildConfig.BASE_URL
+        @Query("q") city: String,
+        @Query("appid") appId: String = BuildConfig.API_KEY,
+        @Query("units") units: String = "metric"
     ): Response<WeatherResponse>
 
     // Get  weather by lat/lon
-    @GET("/weather")
+    @GET("weather")
     suspend fun getWeatherByLatLon(
-        @Query("lat") lat: String,
-        @Query("lon") lon: String,
-        @Query("appid") appId: String = BuildConfig.BASE_URL
+        @Query("lat") lat: Long,
+        @Query("lon") lon: Long,
+        @Query("appid") appId: String = BuildConfig.API_KEY,
+        @Query("units") units: String = "metric"
     ): Response<WeatherResponse>
 }

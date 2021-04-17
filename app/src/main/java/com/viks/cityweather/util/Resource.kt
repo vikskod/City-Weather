@@ -1,18 +1,25 @@
 package com.viks.cityweather.util
 
-import okhttp3.ResponseBody
-
 /*
 * A util class to state Network call result.
 * */
 
-sealed class Resource<out T> {
-    data class Success<out T>(val value: T) : Resource<T>()
-    data class Failure(
-        val isNetworkError: Boolean,
-        val errorCode: Int?,
-        val errorBody: ResponseBody?
-    ) : Resource<Nothing>()
+data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
-    object Loading : Resource<Nothing>()
+    companion object {
+
+        fun <T> success(data: T?): Resource<T> {
+            return Resource(Status.SUCCESS, data, null)
+        }
+
+        fun <T> error(msg: String, data: T?): Resource<T> {
+            return Resource(Status.ERROR, data, msg)
+        }
+
+        fun <T> loading(data: T?): Resource<T> {
+            return Resource(Status.LOADING, data, null)
+        }
+
+    }
+
 }
