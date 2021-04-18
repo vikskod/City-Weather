@@ -28,5 +28,6 @@ data class WeatherResponse(
     @SerializedName("visibility")
     val visibility: Int,
     @SerializedName("weather")
-    val weather: List<Weather>
-): Parcelable
+    val weather: List<Weather>,
+    var isFromLocation: Boolean
+) : Parcelable

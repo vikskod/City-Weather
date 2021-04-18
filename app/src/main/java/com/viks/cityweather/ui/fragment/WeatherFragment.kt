@@ -1,5 +1,6 @@
 package com.viks.cityweather.ui.fragment
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
@@ -38,6 +39,7 @@ class WeatherFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_weather, container, false)
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentWeatherBinding.bind(view)
@@ -54,6 +56,23 @@ class WeatherFragment : Fragment() {
             binding.tvMaxMin.text = spannable
             binding.tvWeatherCondition.text = response.weather[0].main
 
+            if (!response.isFromLocation)
+                binding.ivLocation.visibility = View.GONE
+
+            when (response.weather[0].main) {
+                "Clouds" -> {
+                    binding.ivBackground.setImageDrawable(requireContext().getDrawable(R.drawable.bg_light_cloud))
+                }
+                "Clear" -> {
+                    binding.ivBackground.setImageDrawable(requireContext().getDrawable(R.drawable.bg_clean_sky))
+                }
+                "Rain" -> {
+                    binding.ivBackground.setImageDrawable(requireContext().getDrawable(R.drawable.bg_water_drop))
+                }
+                else -> {
+                    binding.ivBackground.setImageDrawable(requireContext().getDrawable(R.drawable.bg_light_cloud))
+                }
+            }
 
             initRecyclerView()
             initObservers()

@@ -36,7 +36,10 @@ class HomeFragmentViewModel @Inject constructor(private val repository: DefaultM
                         val weatherFromLatLonDeferred =
                             async { repository.getLatLonWeather(location.latitude, location.longitude) }
                         val weatherFromLatLon = weatherFromLatLonDeferred.await()
-                        weatherFromLatLon.data?.let { allWeather.add(it) }
+                        weatherFromLatLon.data?.let {
+                            it.isFromLocation = true
+                            allWeather.add(it)
+                        }
                     }
 
                     val weatherFromCity1Deferred = async { repository.getCityWeather(cities[0]) }

@@ -1,5 +1,6 @@
 package com.viks.cityweather.di
 
+import android.content.Context
 import com.viks.cityweather.BuildConfig
 import com.viks.cityweather.data.network.ApiService
 import com.viks.cityweather.repository.DefaultMainRepository
@@ -8,6 +9,7 @@ import com.viks.cityweather.ui.adapter.ForecastAdapter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -30,5 +32,6 @@ object AppModule {
     fun provideMainRepository(api: ApiService): MainRepository = DefaultMainRepository(api)
 
     @Provides
-    fun provideForecastAdapter(): ForecastAdapter = ForecastAdapter()
+    fun provideForecastAdapter(@ApplicationContext context: Context): ForecastAdapter =
+        ForecastAdapter(context)
 }
