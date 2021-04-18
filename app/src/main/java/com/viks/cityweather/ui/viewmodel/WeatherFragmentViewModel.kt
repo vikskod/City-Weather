@@ -17,15 +17,20 @@ class WeatherFragmentViewModel @Inject constructor(private val repository: Defau
     ViewModel() {
     private val _forecastWeatherResponse: MutableLiveData<Resource<ForecastResponse>> =
         MutableLiveData()
-    val allWeatherResponse: LiveData<Resource<ForecastResponse>> get() = _forecastWeatherResponse
+    val forecastWeatherResponse: LiveData<Resource<ForecastResponse>> get() = _forecastWeatherResponse
 
     fun getForecastWeather(
-        location: Location?,
-        cities: List<String>
+        lat: Double,
+        lon: Double
     ) {
 
         viewModelScope.launch {
-
+            _forecastWeatherResponse.postValue(Resource.loading(null))
+            try {
+                _forecastWeatherResponse.postValue(repository.getForecastWeather(lat, lon))
+            } catch (e: Exception) {
+                _forecastWeatherResponse.postValue(Resource.error(e.toString(), null))
+            }
         }
     }
 }

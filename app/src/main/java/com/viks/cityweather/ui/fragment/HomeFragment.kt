@@ -95,7 +95,6 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
                 Status.SUCCESS -> {
                     dataList.clear()
                     it.data?.let { d ->
-                        //dataList.addAll(d)
                         for (response in d) {
                             dataList.add(WeatherFragment().newInstance(response))
                         }

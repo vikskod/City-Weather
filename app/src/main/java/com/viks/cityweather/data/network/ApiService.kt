@@ -36,6 +36,7 @@ interface ApiService {
         @Query("lat") lat: Double,
         @Query("lon") lon: Double,
         @Query("appid") appId: String = BuildConfig.API_KEY,
-        @Query("exclude") exclude: String = "alerts,hourly,minutely"
+        @Query("exclude") exclude: String = "alerts,hourly,minutely",
+        @Query("units") units: String = "metric"
     ): Response<ForecastResponse>
 }
