@@ -7,5 +7,5 @@ interface MainRepository {
 
     suspend fun getCityWeather(city: String): Resource<WeatherResponse>
 
-    suspend fun getLatLonWeather(lat: Long, lon: Long): Resource<WeatherResponse>
+    suspend fun getLatLonWeather(lat: Double, lon: Double): Resource<WeatherResponse>
 }

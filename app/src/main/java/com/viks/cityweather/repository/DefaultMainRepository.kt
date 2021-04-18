@@ -22,7 +22,7 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
-    override suspend fun getLatLonWeather(lat: Long, lon: Long): Resource<WeatherResponse> {
+    override suspend fun getLatLonWeather(lat: Double, lon: Double): Resource<WeatherResponse> {
         return try {
             val response = api.getWeatherByLatLon(lat, lon)
             val result = response.body()

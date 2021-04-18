@@ -19,8 +19,8 @@ interface ApiService {
     // Get  weather by lat/lon
     @GET("weather")
     suspend fun getWeatherByLatLon(
-        @Query("lat") lat: Long,
-        @Query("lon") lon: Long,
+        @Query("lat") lat: Double,
+        @Query("lon") lon: Double,
         @Query("appid") appId: String = BuildConfig.API_KEY,
         @Query("units") units: String = "metric"
     ): Response<WeatherResponse>

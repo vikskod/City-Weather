@@ -77,4 +77,11 @@ dependencies {
     // Gson
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.0"
+
+    // Handle Android Permissions
+    implementation 'com.github.fondesa:kpermissions:3.2.1'
+    implementation 'com.github.fondesa:kpermissions-coroutines:3.2.1'
+
+    // Get current location
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
 }

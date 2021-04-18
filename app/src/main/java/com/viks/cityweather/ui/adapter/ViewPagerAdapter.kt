@@ -34,7 +34,7 @@ class ViewPagerAdapter(
         holder.binding.tvTemperature.text = currentText.main.temp.toInt().toString()
 
         val spannable =
-            SpannableString("${currentText.main.tempMax.toInt()} / ${currentText.main.tempMin.toInt()}")
+            SpannableString("${currentText.main.tempMax.toInt()}\u00B0 / ${currentText.main.tempMin.toInt()}\u00B0")
         spannable.setSpan(StyleSpan(BOLD), 0, 2, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
 
         holder.binding.tvMaxMin.text = spannable
