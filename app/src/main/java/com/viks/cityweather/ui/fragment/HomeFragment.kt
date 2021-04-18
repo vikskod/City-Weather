@@ -17,11 +17,12 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.tabs.TabLayoutMediator
 import com.viks.cityweather.R
-import com.viks.cityweather.data.model.WeatherResponse
 import com.viks.cityweather.databinding.FragmentHomeBinding
-import com.viks.cityweather.ui.adapter.ViewPagerAdapter
+import com.viks.cityweather.ui.adapter.FragmentViewPagerAdapter
 import com.viks.cityweather.ui.viewmodel.HomeFragmentViewModel
-import com.viks.cityweather.util.*
+import com.viks.cityweather.util.Constant
+import com.viks.cityweather.util.Status
+import com.viks.cityweather.util.showPermanentlyDeniedDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -39,10 +40,10 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
     private lateinit var binding: FragmentHomeBinding
     private val viewModel: HomeFragmentViewModel by viewModels()
 
-    private val cityList = City.cityList
-    private var dataList: MutableList<WeatherResponse> = ArrayList()
+    private val cityList = Constant.cityList
+    private var dataList: MutableList<WeatherFragment> = ArrayList()
 
-    private val pagerAdapter = ViewPagerAdapter(dataList)
+    private lateinit var pagerAdapter: FragmentViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +57,7 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentHomeBinding.bind(view)
 
+        pagerAdapter = FragmentViewPagerAdapter(this, dataList)
         binding.viewPager.adapter = pagerAdapter
 
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { _, _ ->
@@ -92,7 +94,12 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
             when (it.status) {
                 Status.SUCCESS -> {
                     dataList.clear()
-                    it.data?.let { d -> dataList.addAll(d) }
+                    it.data?.let { d ->
+                        //dataList.addAll(d)
+                        for (response in d) {
+                            dataList.add(WeatherFragment().newInstance(response))
+                        }
+                    }
                     pagerAdapter.notifyDataSetChanged()
                     hideProgressBar()
                 }

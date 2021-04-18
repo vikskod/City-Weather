@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.viks.cityweather.data.model.WeatherResponse
+import com.viks.cityweather.data.model.current.WeatherResponse
 import com.viks.cityweather.repository.DefaultMainRepository
 import com.viks.cityweather.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
