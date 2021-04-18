@@ -1,6 +1,5 @@
 package com.viks.cityweather.ui.viewmodel
 
-import android.location.Location
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel class for WeatherFragment
+ * Using LiveData to pass the REST API data to the WeatherFragment
+ */
+
 @HiltViewModel
 class WeatherFragmentViewModel @Inject constructor(private val repository: DefaultMainRepository) :
     ViewModel() {
@@ -19,6 +23,7 @@ class WeatherFragmentViewModel @Inject constructor(private val repository: Defau
         MutableLiveData()
     val forecastWeatherResponse: LiveData<Resource<ForecastResponse>> get() = _forecastWeatherResponse
 
+    // Get weather forecast from the REST API
     fun getForecastWeather(
         lat: Double,
         lon: Double

@@ -12,6 +12,11 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
+/**
+ * ViewModel class for HomeFragment
+ * Using LiveData to pass the REST API data to the HomeFragment
+ */
+
 @HiltViewModel
 class HomeFragmentViewModel @Inject constructor(private val repository: DefaultMainRepository) :
     ViewModel() {
@@ -29,9 +34,9 @@ class HomeFragmentViewModel @Inject constructor(private val repository: DefaultM
 
             try {
                 // coroutineScope is needed, else in case of any network error, it will crash
-                coroutineScope {
                     val allWeather = mutableListOf<WeatherResponse>()
 
+                    // If location is known show current weather of last know location
                     if (location != null) {
                         val weatherFromLatLonDeferred =
                             async { repository.getLatLonWeather(location.latitude, location.longitude) }
@@ -46,20 +51,15 @@ class HomeFragmentViewModel @Inject constructor(private val repository: DefaultM
                     val weatherFromCity2Deferred = async { repository.getCityWeather(cities[1]) }
                     val weatherFromCity3Deferred = async { repository.getCityWeather(cities[2]) }
 
-
                     val weatherFromCity1 = weatherFromCity1Deferred.await()
                     val weatherFromCity2 = weatherFromCity2Deferred.await()
                     val weatherFromCity3 = weatherFromCity3Deferred.await()
-
-
 
                     weatherFromCity1.data?.let { allWeather.add(it) }
                     weatherFromCity2.data?.let { allWeather.add(it) }
                     weatherFromCity3.data?.let { allWeather.add(it) }
 
                     _allWeatherResponse.postValue(Resource.success(allWeather))
-
-                }
             } catch (e: Exception) {
                 _allWeatherResponse.postValue(Resource.error("Something Went Wrong", null))
             }

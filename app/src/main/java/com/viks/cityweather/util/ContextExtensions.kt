@@ -10,6 +10,10 @@ import com.fondesa.kpermissions.PermissionStatus
 import com.fondesa.kpermissions.request.PermissionRequest
 import com.viks.cityweather.R
 
+/**
+ * Helper class for User Permissions
+ */
+
 internal fun Context.showGrantedToast(permissions: List<PermissionStatus>) {
     val msg = getString(R.string.granted_permissions, permissions.toMessage<PermissionStatus.Granted>())
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

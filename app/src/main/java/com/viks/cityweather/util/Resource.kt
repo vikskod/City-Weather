@@ -1,8 +1,8 @@
 package com.viks.cityweather.util
 
-/*
-* A util class to state Network call result.
-* */
+/**
+ * A util class to state Network call result
+ */
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 

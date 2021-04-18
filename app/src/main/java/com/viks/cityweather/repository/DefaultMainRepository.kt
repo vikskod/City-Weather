@@ -9,6 +9,7 @@ import javax.inject.Inject
 class DefaultMainRepository @Inject constructor(
     private val api: ApiService
 ) : MainRepository {
+    // Pull current weather using Location name
     override suspend fun getCityWeather(city: String): Resource<WeatherResponse> {
         return try {
             val response = api.getWeatherByCity(city)
@@ -23,6 +24,7 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
+    // Pull current weather using Location coordinates
     override suspend fun getLatLonWeather(lat: Double, lon: Double): Resource<WeatherResponse> {
         return try {
             val response = api.getWeatherByLatLon(lat, lon)
@@ -36,6 +38,7 @@ class DefaultMainRepository @Inject constructor(
         }
     }
 
+    // Pull 8 days forecast from the api.
     override suspend fun getForecastWeather(lat: Double, lon: Double): Resource<ForecastResponse> {
         return try {
             val response = api.getForecast(lat, lon)

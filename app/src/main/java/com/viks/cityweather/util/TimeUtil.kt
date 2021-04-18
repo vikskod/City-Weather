@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TimeUtil constructor() {
+class TimeUtil {
 
     @SuppressLint("SimpleDateFormat")
     fun getMyFormat(givenMillis: Long): String {

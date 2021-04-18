@@ -25,6 +25,10 @@ import com.viks.cityweather.util.Status
 import com.viks.cityweather.util.showPermanentlyDeniedDialog
 import dagger.hilt.android.AndroidEntryPoint
 
+/**
+ * HomeFragment contains Viewpager2 and TabLayout
+ * WeatherFragment is attached on viewpager2
+ */
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(), PermissionRequest.Listener {
@@ -68,6 +72,7 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
         request.addListener(this)
         request.addListener {
             if (it.anyGranted()) {
+                // Receive last known location. This can be null if last location is unknown
                 fusedLocationClient.lastLocation
                     .addOnSuccessListener { location: Location? ->
                         //TODO check network is available or not
@@ -88,8 +93,11 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
         request.send()
     }
 
+    /*
+    * Observe data from LiveData
+    * Display Weather fragment on viewpager2
+    * */
     private fun initObservers() {
-        // Observe data from LiveData
         viewModel.allWeatherResponse.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -121,6 +129,10 @@ class HomeFragment : Fragment(), PermissionRequest.Listener {
         binding.progressBar.visibility = View.GONE
     }
 
+    /*
+    * onPermissionsResult is called when user give/denied the permissions
+    * If Location permission, FusedLocationProviderClient is used to get last known location of device.
+    * */
     override fun onPermissionsResult(result: List<PermissionStatus>) {
         val context = requireContext()
         when {

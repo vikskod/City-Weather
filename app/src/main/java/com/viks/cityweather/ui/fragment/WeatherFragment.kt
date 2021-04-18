@@ -23,6 +23,12 @@ import com.viks.cityweather.util.Status
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Viewpager2 holds WeatherFragment
+ * WeatherFragment shows Current weather and 3 days weather forecast
+ * Contains general views and RecyclerView
+ */
+
 @AndroidEntryPoint
 class WeatherFragment : Fragment() {
 
@@ -96,8 +102,12 @@ class WeatherFragment : Fragment() {
         }
     }
 
+    /*
+    * Observe data from LiveData
+    * Remove today's weather from Forecast using drop method
+    * Send data to Recyclerview Adapter
+    * */
     private fun initObservers() {
-        // Observe data from LiveData
         viewModel.forecastWeatherResponse.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {

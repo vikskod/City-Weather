@@ -17,6 +17,10 @@ import com.viks.cityweather.data.model.forecast.Daily
 import com.viks.cityweather.databinding.RvItemForecastBinding
 import com.viks.cityweather.util.TimeUtil
 
+/**
+ * Adapter class to show 3 days weather Forecast in Recyclerview
+ */
+
 class ForecastAdapter(val context: Context) :
     RecyclerView.Adapter<ForecastAdapter.ForecastViewHolder>() {
 
@@ -72,6 +76,7 @@ class ForecastAdapter(val context: Context) :
     }
 
     override fun getItemCount(): Int {
+        // Showing no more than 3 days Forecase
         return if (differ.currentList.size < 3)
             differ.currentList.size
         else 3
