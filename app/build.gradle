@@ -85,7 +85,4 @@ dependencies {
 
     // Get current location
     implementation 'com.google.android.gms:play-services-location:18.0.0'
-
-    // Pretty Time
-    implementation 'org.ocpsoft.prettytime:prettytime:4.0.4.Final'
 }
