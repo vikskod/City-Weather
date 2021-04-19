@@ -2,7 +2,6 @@ package com.viks.cityweather.data.model.current
 
 
 import android.os.Parcelable
-import androidx.versionedparcelable.ParcelField
 import com.google.gson.annotations.SerializedName
 import com.viks.cityweather.data.model.Weather
 import kotlinx.android.parcel.Parcelize

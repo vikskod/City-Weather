@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.viks.cityweather.data.model.forecast.ForecastResponse
-import com.viks.cityweather.repository.DefaultMainRepository
+import com.viks.cityweather.repository.MainRepository
 import com.viks.cityweather.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class WeatherFragmentViewModel @Inject constructor(private val repository: DefaultMainRepository) :
+class WeatherFragmentViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
     private val _forecastWeatherResponse: MutableLiveData<Resource<ForecastResponse>> =
         MutableLiveData()

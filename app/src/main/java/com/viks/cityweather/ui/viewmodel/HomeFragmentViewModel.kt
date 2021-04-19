@@ -6,10 +6,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.viks.cityweather.data.model.current.WeatherResponse
-import com.viks.cityweather.repository.DefaultMainRepository
+import com.viks.cityweather.repository.MainRepository
 import com.viks.cityweather.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
@@ -18,7 +19,7 @@ import javax.inject.Inject
  */
 
 @HiltViewModel
-class HomeFragmentViewModel @Inject constructor(private val repository: DefaultMainRepository) :
+class HomeFragmentViewModel @Inject constructor(private val repository: MainRepository) :
     ViewModel() {
     private val _allWeatherResponse: MutableLiveData<Resource<List<WeatherResponse>>> =
         MutableLiveData()
@@ -34,32 +35,28 @@ class HomeFragmentViewModel @Inject constructor(private val repository: DefaultM
 
             try {
                 // coroutineScope is needed, else in case of any network error, it will crash
-                    val allWeather = mutableListOf<WeatherResponse>()
+                val allWeather = mutableListOf<WeatherResponse>()
 
-                    // If location is known show current weather of last know location
-                    if (location != null) {
-                        val weatherFromLatLonDeferred =
-                            async { repository.getLatLonWeather(location.latitude, location.longitude) }
-                        val weatherFromLatLon = weatherFromLatLonDeferred.await()
-                        weatherFromLatLon.data?.let {
-                            it.isFromLocation = true
-                            allWeather.add(it)
-                        }
+                // If location is known show current weather of last know location
+                if (location != null) {
+                    val weatherFromLatLonDeferred =
+                        async { repository.getLatLonWeather(location.latitude, location.longitude) }
+                    val weatherFromLatLon = weatherFromLatLonDeferred.await()
+                    weatherFromLatLon.data?.let {
+                        it.isFromLocation = true
+                        allWeather.add(it)
                     }
+                }
 
-                    val weatherFromCity1Deferred = async { repository.getCityWeather(cities[0]) }
-                    val weatherFromCity2Deferred = async { repository.getCityWeather(cities[1]) }
-                    val weatherFromCity3Deferred = async { repository.getCityWeather(cities[2]) }
+                for (city in cities) {
+                    val weatherFromCityDeferred = async { repository.getCityWeather(city) }
+                    val weatherFromCity = weatherFromCityDeferred.await()
+                    weatherFromCity.data?.let { allWeather.add(it) }
+                }
 
-                    val weatherFromCity1 = weatherFromCity1Deferred.await()
-                    val weatherFromCity2 = weatherFromCity2Deferred.await()
-                    val weatherFromCity3 = weatherFromCity3Deferred.await()
-
-                    weatherFromCity1.data?.let { allWeather.add(it) }
-                    weatherFromCity2.data?.let { allWeather.add(it) }
-                    weatherFromCity3.data?.let { allWeather.add(it) }
-
+                if (allWeather.size > 0)
                     _allWeatherResponse.postValue(Resource.success(allWeather))
+                else  _allWeatherResponse.postValue(Resource.error("Something Went Wrong", null))
             } catch (e: Exception) {
                 _allWeatherResponse.postValue(Resource.error("Something Went Wrong", null))
             }
