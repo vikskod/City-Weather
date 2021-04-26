@@ -4,7 +4,7 @@ Android app to show weather using MVVM, Retrofit, Hilt, and Jetpack component
 ### To Run App:
 - Base url: *https://api.openweathermap.org/data/2.5/*
 - Read the [Documentation](https://openweathermap.org/api) and get API key
-- Put it into `gradle.properties` file as shown below (You will not get this file in this repo)
+- Put it into `gradle.properties` file as shown below or use my free api key. I suggest you to use your own key. It may not work in future.
 
 <img src="/screenshots/Screenshot 2021-04-19 164748.png" height="450"/>
 
