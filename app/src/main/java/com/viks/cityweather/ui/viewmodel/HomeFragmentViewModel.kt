@@ -34,7 +34,6 @@ class HomeFragmentViewModel @Inject constructor(private val repository: MainRepo
             _allWeatherResponse.postValue(Resource.loading(null))
 
             try {
-                // coroutineScope is needed, else in case of any network error, it will crash
                 val allWeather = mutableListOf<WeatherResponse>()
 
                 // If location is known show current weather of last know location
