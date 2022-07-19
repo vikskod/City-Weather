@@ -8,7 +8,6 @@ import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -76,9 +75,6 @@ class ForecastAdapter(val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        // Showing no more than 3 days Forecase
-        return if (differ.currentList.size < 3)
-            differ.currentList.size
-        else 3
+        return differ.currentList.size
     }
 }

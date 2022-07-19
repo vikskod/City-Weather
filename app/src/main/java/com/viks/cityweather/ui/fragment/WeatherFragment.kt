@@ -14,7 +14,6 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.viks.cityweather.R
 import com.viks.cityweather.data.model.current.WeatherResponse
-import com.viks.cityweather.data.model.forecast.Daily
 import com.viks.cityweather.databinding.FragmentWeatherBinding
 import com.viks.cityweather.ui.adapter.ForecastAdapter
 import com.viks.cityweather.ui.viewmodel.WeatherFragmentViewModel
@@ -108,19 +107,16 @@ class WeatherFragment : Fragment() {
     * Send data to Recyclerview Adapter
     * */
     private fun initObservers() {
-        viewModel.forecastWeatherResponse.observe(viewLifecycleOwner, {
+        viewModel.forecastWeatherResponse.observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     mAdapter.differ.submitList(it.data?.daily?.drop(1))
                     binding.rvFutureWeather.visibility = View.VISIBLE
                 }
-                Status.LOADING -> {
-                    binding.rvFutureWeather.visibility = View.GONE
-                }
-                Status.ERROR -> {
-                    binding.rvFutureWeather.visibility = View.GONE
-                }
+                Status.LOADING -> binding.rvFutureWeather.visibility = View.GONE
+                Status.ERROR -> binding.rvFutureWeather.visibility = View.GONE
+
             }
-        })
+        }
     }
 }
